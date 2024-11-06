@@ -7,11 +7,13 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 //sprawdzenie czy baza danych jest polaczona z serwerem
-public class DataBaseConnectionTest {
+class DataBaseConnectionTest {
 
     @Autowired
     private DataSource dataSource;
