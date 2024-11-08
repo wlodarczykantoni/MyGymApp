@@ -8,4 +8,5 @@ import org.springframework.data.repository.CrudRepository;
 @EnableJpaRepositories(basePackages = "users")
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByLogin(String login);
+    boolean existsByUsername(String username);
 }

@@ -37,15 +37,7 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public List<User> getAllUsers() {
-        List<User> userList = new ArrayList<>();
-        userRepository.findAll().forEach(userList::add);
-        return userList;
-    }
 
-    public void deleteUser(Long userId) {
-        userRepository.deleteById(userId);
-    }
 
     public User findByUsername(String username) {
         return userRepository.findByLogin(username);

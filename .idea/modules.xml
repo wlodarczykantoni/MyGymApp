@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/MyGymApp/MyGymApp.iml" filepath="$PROJECT_DIR$/MyGymApp/MyGymApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Serwer.iml" filepath="$PROJECT_DIR$/.idea/Serwer.iml" />
     </modules>
   </component>
