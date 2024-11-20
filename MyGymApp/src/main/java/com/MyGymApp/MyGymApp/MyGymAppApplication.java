@@ -14,7 +14,6 @@ import users.UserRepository;
 import java.time.LocalDate;
 
 
-// to aplikacja Spring Boot, która inicjuje demo bazę danych przy uruchomieniu, zawierającą trzech użytkowników: admina oraz dwóch zwykłych użytkowników
 
 @SpringBootApplication
 public class MyGymAppApplication {
@@ -24,7 +23,7 @@ public class MyGymAppApplication {
 	private final UserRepository userRepository;
 
 	@Autowired
-	public MyGymAppApplication(UserRepository userRepository) {
+    private MyGymAppApplication(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 
@@ -32,7 +31,11 @@ public class MyGymAppApplication {
 		SpringApplication.run(MyGymAppApplication.class, args);
 	}
 
-	@Bean
+    public static MyGymAppApplication createMyGymAppApplication(UserRepository userRepository) {
+        return new MyGymAppApplication(userRepository);
+    }
+
+    @Bean
 	public CommandLineRunner initDemoDb() {
 		return (args) -> {
 			User admin = new User("admin", "admin", LocalDate.now());

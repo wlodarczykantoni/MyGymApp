@@ -19,6 +19,8 @@ public class Exercise {
     private String muscleGroup;
     private String difficulty;
     private String typeOfEquipment;
+    private String pictureExercise;
+
 
 
     public String getName() {

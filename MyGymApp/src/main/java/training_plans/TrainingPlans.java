@@ -11,10 +11,10 @@ public class TrainingPlans {
     @Id
     private Long id;
     private Long trainerId;
-    private long userId;
+    private Long userId;
     private String title;
-    private String level;
-    private String goals;
+    private String level;//poziom trudnosci
+    private String goals;//cel planu
 
     public Long getTrainerId() {
         return trainerId;

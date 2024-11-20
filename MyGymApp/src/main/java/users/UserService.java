@@ -29,7 +29,7 @@ public class UserService {
     }
 
     public boolean checkLogin(String username, String password) {
-        User user = userRepository.findByLogin(username);
+        User user = userRepository.findByUsername(username);
         return user != null && user.getPassword().equals(password);
     }
 
@@ -40,7 +40,7 @@ public class UserService {
 
 
     public User findByUsername(String username) {
-        return userRepository.findByLogin(username);
+        return userRepository.findByUsername(username);
     }
 
     public User saveUser(User user) {
