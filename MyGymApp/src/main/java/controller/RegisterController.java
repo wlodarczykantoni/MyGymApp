@@ -11,7 +11,6 @@ import users.UserRepository;
 
 import java.time.LocalDate;
 
-// Obsługuje żądania rejestracji użytkownika, sprawdzając dostępność nazwy użytkownika i zapisując nowego użytkownika w repozytorium
 @Controller
 public class RegisterController {
 
