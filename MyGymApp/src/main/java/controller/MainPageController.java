@@ -1,7 +1,6 @@
 package controller;
 
 
-import com.MyGymApp.MyGymApp.MyGymAppApplication;
 import org.springframework.ui.Model;
 
 import jakarta.servlet.http.HttpSession;

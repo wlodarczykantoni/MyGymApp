@@ -1,6 +1,5 @@
 package controller;
 
-import com.MyGymApp.MyGymApp.MyGymAppApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

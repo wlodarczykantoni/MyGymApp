@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import users.User;
 import users.UserRepository;
 
@@ -15,15 +16,18 @@ import java.time.LocalDate;
 
 
 
+
 @SpringBootApplication
+@ComponentScan(basePackages = {"com.MyGymApp", "users"})
 public class MyGymAppApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(MyGymAppApplication.class);
 
 	private final UserRepository userRepository;
 
+
 	@Autowired
-    private MyGymAppApplication(UserRepository userRepository) {
+    public MyGymAppApplication(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 
@@ -54,6 +58,7 @@ public class MyGymAppApplication {
 			}
 			log.info("\n");
 		};
-	}
 
+
+		}
 }

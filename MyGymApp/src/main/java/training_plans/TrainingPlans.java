@@ -66,17 +66,17 @@ public class TrainingPlans {
     }
 
 
-
     @ManyToMany
     @JoinTable(
-        name = "trainingPlans",
-        joinColumns = @JoinColumn(name = "plan_id"),
-        inverseJoinColumns = @JoinColumn(name = "exercise_id")
-        )
+            name = "trainingPlans",
+            joinColumns = @JoinColumn(name = "plan_id"),
+            inverseJoinColumns = @JoinColumn(name = "exercise_id")
+    )
     private List<Exercise> exercises;
 
     @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL)
     private List<PlanExercise> planExercises;
+
     public List<Exercise> getExercises() {
         return exercises;
     }
@@ -89,7 +89,6 @@ public class TrainingPlans {
     public void setPlanExercises(List<PlanExercise> planExercises) {
         this.planExercises = planExercises;
     }
-
 
 
     public void setExercises(List<Exercise> exercises) {
