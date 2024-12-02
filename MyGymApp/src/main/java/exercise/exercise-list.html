@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylExercise.css">
+    <title>Lista Ćwiczeń</title>
+</head>
+<body>
+<h1>Lista Ćwiczeń</h1>
+
+<h2>Dodane ćwiczenia:</h2>
+<div id="exerciseList">
+    <!--tutaj beda cwiczenia wyswietlane-->
+</div>
+
+<script>
+    fetch('/api/saveData/exercisesAtlas')
+        .then(response => response.json())
+        .then(data => {
+            const exerciseList = document.getElementById('exerciseList');
+            data.forEach(exercise => {
+                const exerciseItem = document.createElement('div');
+                exerciseItem.classList.add('exerciseItem');
+                exerciseItem.innerHTML = `
+                    <h3>${exercise.name}</h3>
+                    <p><strong>Opis:</strong> ${exercise.description}</p>
+                    <p><strong>Muscle Group:</strong> ${exercise.muscleGroup}</p>
+                    <p><strong>Difficulty:</strong> ${exercise.difficulty}</p>
+                    <p><strong>Equipment:</strong> ${exercise.typeOfEquipment}</p>
+                `;
+                exerciseList.appendChild(exerciseItem);
+            });
+        })
+        .catch(error => console.error('Error fetching exercises:', error));
+</script>
+</body>
+</html>

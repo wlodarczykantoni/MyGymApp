@@ -2,19 +2,29 @@ package training_plans;
 
 import exercise.Exercise;
 import jakarta.persistence.*;
+import users.User;
 
 import java.util.List;
 
 @Entity
-@Table(name = "trainingPlans")
+@Table(name = "training_plans")
 public class TrainingPlans {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Long trainerId;
-    private Long userId;
     private String title;
-    private String level;//poziom trudnosci
-    private String goals;//cel planu
+    private String level; // poziom trudności
+    private String goals; // cel planu
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", unique = true)
+    public User user;
+
+    @OneToMany(mappedBy = "trainingPlans", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PlanExercise> planExercises;
 
     public Long getTrainerId() {
         return trainerId;
@@ -22,14 +32,6 @@ public class TrainingPlans {
 
     public void setTrainerId(Long trainerId) {
         this.trainerId = trainerId;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
     }
 
     public String getTitle() {
@@ -56,31 +58,21 @@ public class TrainingPlans {
         this.goals = goals;
     }
 
+    public Long getId() {
+        return id;
+    }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getId() {
-        return id;
+    public User getUser() {
+        return user;
     }
 
-
-    @ManyToMany
-    @JoinTable(
-            name = "trainingPlans",
-            joinColumns = @JoinColumn(name = "plan_id"),
-            inverseJoinColumns = @JoinColumn(name = "exercise_id")
-    )
-    private List<Exercise> exercises;
-
-    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL)
-    private List<PlanExercise> planExercises;
-
-    public List<Exercise> getExercises() {
-        return exercises;
+    public void setUser(User user) {
+        this.user = user;
     }
-
 
     public List<PlanExercise> getPlanExercises() {
         return planExercises;
@@ -88,10 +80,5 @@ public class TrainingPlans {
 
     public void setPlanExercises(List<PlanExercise> planExercises) {
         this.planExercises = planExercises;
-    }
-
-
-    public void setExercises(List<Exercise> exercises) {
-        this.exercises = exercises;
     }
 }

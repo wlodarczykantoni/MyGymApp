@@ -4,28 +4,31 @@ import exercise.Exercise;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "planExercise")
+@Table(name = "plan_exercises")
 public class PlanExercise {
+
     @Id
-    private Long planId;
-    private Long exerciseId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private Integer sets;
     private Integer repetitions;
+    private Integer weight;
 
-    public Integer getWeight() {
-        return weight;
+    @ManyToOne
+    @JoinColumn(name = "training_plan_id", nullable = false)
+    private TrainingPlans trainingPlans;
+
+    @ManyToOne
+    @JoinColumn(name = "exercise_id", nullable = false)
+    private Exercise exercise;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setWeight(Integer weight) {
-        this.weight = weight;
-    }
-
-    public Integer getRepetitions() {
-        return repetitions;
-    }
-
-    public void setRepetitions(Integer repetitions) {
-        this.repetitions = repetitions;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Integer getSets() {
@@ -36,38 +39,21 @@ public class PlanExercise {
         this.sets = sets;
     }
 
-    public Long getExerciseId() {
-        return exerciseId;
+    public Integer getRepetitions() {
+        return repetitions;
     }
 
-    public void setExerciseId(Long exerciseId) {
-        this.exerciseId = exerciseId;
+    public void setRepetitions(Integer repetitions) {
+        this.repetitions = repetitions;
     }
 
-    public Long getPlanId() {
-        return planId;
+    public Integer getWeight() {
+        return weight;
     }
 
-    public void setPlanId(Long planId) {
-        this.planId = planId;
+    public void setWeight(Integer weight) {
+        this.weight = weight;
     }
-
-    private Integer weight;
-
-    public void setId(Long planId) {
-        this.planId = planId;
-    }
-
-    public Long getId() {
-        return planId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "trainingPlan_id",nullable = false)
-    private TrainingPlans trainingPlans;
-    @ManyToOne
-    @JoinColumn(name = "exercise_id", nullable = false)
-    private Exercise exercise;
 
     public TrainingPlans getTrainingPlans() {
         return trainingPlans;
@@ -84,8 +70,4 @@ public class PlanExercise {
     public void setExercise(Exercise exercise) {
         this.exercise = exercise;
     }
-
-
-
-
 }

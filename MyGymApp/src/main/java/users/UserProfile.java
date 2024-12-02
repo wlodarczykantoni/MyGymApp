@@ -8,7 +8,6 @@ import trophies.Trophy;
 public class UserProfile {
     @Id
     private Long id;
-    private long userId;
     private String username;
     private Integer height;
     private Integer weight;
@@ -16,19 +15,11 @@ public class UserProfile {
     private String gender;
     private String location;
     private String records;
-    private Long trophy_id;
     private String trophy_name;
     private String activity_level;
     private String video;
     private String profile_picture;
 
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
 
     public String getUsername() {
         return username;
@@ -86,13 +77,7 @@ public class UserProfile {
         this.records = records;
     }
 
-    public Long getTrophy_id() {
-        return trophy_id;
-    }
 
-    public void setTrophy_id(Long trophy_id) {
-        this.trophy_id = trophy_id;
-    }
 
     public String getTrophy_name() {
         return trophy_name;

@@ -1,9 +1,7 @@
 package exercise;
 
-
 import jakarta.persistence.*;
 import training_plans.PlanExercise;
-import training_plans.TrainingPlans;
 
 import java.util.List;
 
@@ -21,7 +19,16 @@ public class Exercise {
     private String typeOfEquipment;
     private String pictureExercise;
 
+    @OneToMany(mappedBy = "exercise", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PlanExercise> planExercises;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -63,19 +70,13 @@ public class Exercise {
         this.typeOfEquipment = typeOfEquipment;
     }
 
-
-
-    public void setId(Long id) {
-        this.id = id;
+    public String getPictureExercise() {
+        return pictureExercise;
     }
 
-    public Long getId() {
-        return id;
+    public void setPictureExercise(String pictureExercise) {
+        this.pictureExercise = pictureExercise;
     }
-
-    @OneToMany(mappedBy = "exercises", cascade = CascadeType.ALL)
-    private List<PlanExercise> planExercises;
-
 
     public List<PlanExercise> getPlanExercises() {
         return planExercises;
@@ -84,11 +85,4 @@ public class Exercise {
     public void setPlanExercises(List<PlanExercise> planExercises) {
         this.planExercises = planExercises;
     }
-
-
-
-
-
-
-
 }

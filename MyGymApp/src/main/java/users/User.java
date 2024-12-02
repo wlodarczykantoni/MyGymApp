@@ -1,29 +1,30 @@
 package users;
 
 import jakarta.persistence.*;
-import training_plans.PlanExercise;
 import training_plans.TrainingPlans;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-//reprezentuje użytkownika w systemie ma pola takie jak id, username, signupDate, password i admin oraz listę zegarów (clocks). metoda addClock dodaje zegar użytkownikowi, a removeClock usuwa go kluczowe są adnotacje JPA użyte do mapowania klasy na tabelę w bazie danych
-
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String username;
-
     private LocalDate signupDate;
-
     private String password;
-
     private boolean admin;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrainingPlans> plans = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private UserProfile profile;
 
     public User() {}
 
@@ -73,15 +74,6 @@ public class User {
         this.admin = admin;
     }
 
-
-
-
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<TrainingPlans> plans = new ArrayList<>();
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private UserProfile profile;
-
     public List<TrainingPlans> getPlans() {
         return plans;
     }
@@ -90,8 +82,6 @@ public class User {
         this.plans = plans;
     }
 
-
-
     public UserProfile getProfile() {
         return profile;
     }
@@ -99,10 +89,6 @@ public class User {
     public void setProfile(UserProfile profile) {
         this.profile = profile;
     }
-
-
-
-
 
     @Override
     public String toString() {
