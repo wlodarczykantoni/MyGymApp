@@ -1,11 +1,9 @@
 package users;
 
 import jakarta.persistence.*;
-import training_plans.TrainingPlans;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import training_plans.TrainingPlans;
 
 @Entity
 @Table(name = "users")
@@ -16,24 +14,29 @@ public class User {
     private Long id;
 
     private String username;
-    private LocalDate signupDate;
     private String password;
     private boolean admin;
+    private LocalDate signupDate;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TrainingPlans> plans = new ArrayList<>();
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserProfile profile;
 
-    public User() {}
+    @OneToMany(mappedBy = "user")
+    private List<TrainingPlans> plans;
 
+    // Konstruktor bezargumentowy (wymagany przez JPA)
+    public User() {
+    }
+
+    // Konstruktor z parametrami
     public User(String username, String password, LocalDate signupDate) {
         this.username = username;
         this.password = password;
         this.signupDate = signupDate;
+        this.admin = false; // Domyślnie użytkownik nie jest adminem
     }
 
+    // Gettery i settery
     public Long getId() {
         return id;
     }
@@ -48,14 +51,6 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public LocalDate getSignupDate() {
-        return signupDate;
-    }
-
-    public void setSignupDate(LocalDate signupDate) {
-        this.signupDate = signupDate;
     }
 
     public String getPassword() {
@@ -74,12 +69,12 @@ public class User {
         this.admin = admin;
     }
 
-    public List<TrainingPlans> getPlans() {
-        return plans;
+    public LocalDate getSignupDate() {
+        return signupDate;
     }
 
-    public void setPlans(List<TrainingPlans> plans) {
-        this.plans = plans;
+    public void setSignupDate(LocalDate signupDate) {
+        this.signupDate = signupDate;
     }
 
     public UserProfile getProfile() {
@@ -90,8 +85,11 @@ public class User {
         this.profile = profile;
     }
 
-    @Override
-    public String toString() {
-        return "User [" + id + "] has username: " + username;
+    public List<TrainingPlans> getPlans() {
+        return plans;
+    }
+
+    public void setPlans(List<TrainingPlans> plans) {
+        this.plans = plans;
     }
 }

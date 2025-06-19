@@ -21,30 +21,30 @@ public class RegisterController {
         this.userRepository = userRepository;
     }
 
+    // Obsługa rejestracji użytkownika
     @PostMapping("/register")
     public String registerUser(User user, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "register";
+            return "register"; // Jeśli są błędy w formularzu
         }
 
         if (userRepository.existsByUsername(user.getUsername())) {
-            model.addAttribute("error", "Username is already taken");
+            model.addAttribute("error", "Login już istnieje"); // Login zajęty
             return "register";
         }
 
-        user.setSignupDate(LocalDate.now());
-        userRepository.save(user);
+        user.setSignupDate(LocalDate.now()); // Data rejestracji
+        userRepository.save(user); // Zapis do bazy
 
-        System.out.println("Zarejestrowano nowego użytkownika:");
-        System.out.println("Username: " + user.getUsername());
-        System.out.println("Signup Date: " + user.getSignupDate());
+        System.out.println("Zarejestrowano nowego użytkownika: " + user.getUsername());
 
-        return "redirect:/login";
+        return "redirect:/login"; // Przekierowanie do logowania
     }
 
+    // Formularz rejestracyjny
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new User()); // Pusty użytkownik do formularza
         return "register";
     }
 }

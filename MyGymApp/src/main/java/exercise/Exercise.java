@@ -2,25 +2,28 @@ package exercise;
 
 import jakarta.persistence.*;
 import training_plans.PlanExercise;
-
 import java.util.List;
 
-@Entity
-@Table(name = "exercises")
+@Entity // Ta klasa to encja bazy danych (tabela exercises)
+@Table(name = "exercises") // Nazwa tabeli w bazie
 public class Exercise {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // Klucz główny
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto inkrementacja ID
     private Long id;
-    private String name;
-    private String description;
-    private String muscleGroup;
-    private String difficulty;
-    private String typeOfEquipment;
-    private String pictureExercise;
+
+    private String name; // nazwa ćwiczenia
+    private String description; // opis ćwiczenia
+    private String muscleGroup; // grupa mięśniowa
+    private String difficulty; // poziom trudności
+    private String typeOfEquipment; // sprzęt potrzebny
+    private String pictureExercise; // link/do zdjęcia ćwiczenia
 
     @OneToMany(mappedBy = "exercise", cascade = CascadeType.ALL, orphanRemoval = true)
+    // relacja 1 do wielu z PlanExercise — powiązane plany treningowe
     private List<PlanExercise> planExercises;
+
+    // Gettery i Settery - potrzebne do odczytu i zapisu pól
 
     public Long getId() {
         return id;

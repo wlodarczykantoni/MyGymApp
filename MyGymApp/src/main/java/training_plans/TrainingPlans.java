@@ -3,7 +3,6 @@ package training_plans;
 import exercise.Exercise;
 import jakarta.persistence.*;
 import users.User;
-
 import java.util.List;
 
 @Entity
@@ -16,15 +15,24 @@ public class TrainingPlans {
 
     private Long trainerId;
     private String title;
-    private String level; // poziom trudności
-    private String goals; // cel planu
+    private String level;
+    private String goals;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", unique = true)
-    public User user;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @OneToMany(mappedBy = "trainingPlans", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PlanExercise> planExercises;
+
+    // Gettery i settery
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getTrainerId() {
         return trainerId;
@@ -56,14 +64,6 @@ public class TrainingPlans {
 
     public void setGoals(String goals) {
         this.goals = goals;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public User getUser() {

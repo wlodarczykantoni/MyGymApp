@@ -5,16 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import users.User;
 import users.UserService;
 import java.time.LocalDate;
-
 
 @Controller
 public class LoginController {
@@ -36,23 +32,24 @@ public class LoginController {
     @GetMapping("/showRegisterForm")
     public String showRegistrationForm(Model model) {
         logger.info("Displaying registration form");
-        model.addAttribute("user", new User("", "", LocalDate.now())); // Inicjalizacja z pustymi wartościami
+        User user = new User(); // Tworzymy pustego użytkownika
+        user.setSignupDate(LocalDate.now()); // Ustawiamy datę rejestracji
+        model.addAttribute("user", user);
         return "register";
     }
-
 
     @PostMapping("/processRegister")
     public String processRegistration(@ModelAttribute("user") User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            logger.error("Registration form contains errors: " + bindingResult.getAllErrors());
+            logger.error("Formularz ma błędy: " + bindingResult.getAllErrors());
             return "register";
         }
 
         try {
             userService.saveUser(user);
-            logger.info("User successfully registered: " + user.getUsername());
+            logger.info("Użytkownik zarejestrowany: " + user.getUsername());
         } catch (Exception e) {
-            logger.error("Error saving user: ", e);
+            logger.error("Błąd przy zapisie: ", e);
             return "register";
         }
 
@@ -65,9 +62,9 @@ public class LoginController {
 
         if (user != null && user.getPassword().equals(password)) {
             session.setAttribute("userId", user.getId());
-            return user.isAdmin() ? "redirect:/adminPanel" : "redirect:/mainPage";
+            return user.isAdmin() ? "redirect:/admin/dashboard" : "redirect:/homePage";
         } else {
-            model.addAttribute("error", "Invalid username or password");
+            model.addAttribute("error", "Błędny login lub hasło");
             return "login";
         }
     }

@@ -1,13 +1,10 @@
 package controller;
 
-
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import users.UserService;
 
 @Controller
@@ -16,36 +13,29 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
+    // Główna strona (np. strona logowania)
     @GetMapping("/")
     public String index() {
-        return "index";
+        return "index"; // Pokazuje index.html
     }
 
-    @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password, HttpSession session) {
-        boolean authenticated = userService.checkLogin(username, password);
-        if (authenticated) {
-            session.setAttribute("userId", userService.findByUsername(username).getId());
-            return "redirect:/welcome";
-        } else {
-            return "redirect:/?error=Nieprawidłowe dane logowania";
-        }
-    }
-
+    // Po zalogowaniu pokazuje ekran powitalny
     @GetMapping("/welcome")
     public String welcome(Model model, HttpSession session) {
-        Long userId = (Long) session.getAttribute("userId");
+        Long userId = (Long) session.getAttribute("userId"); // Sprawdzamy kto jest zalogowany
         if (userId == null) {
-            return "redirect:/";
+            return "redirect:/"; // Jeśli nikogo nie ma, wracamy na start
         }
-        String username = userService.getUserById(userId).getUsername();
-        model.addAttribute("username", username);
-        return "welcome";
+
+        String username = userService.getUserById(userId).getUsername(); // Pobieramy nazwę użytkownika
+        model.addAttribute("username", username); // Przekazujemy do widoku
+        return "welcome"; // Wyświetlamy welcome.html
     }
 
+    // Wylogowanie – kończymy sesję
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/";
+        session.invalidate(); // Czyścimy dane sesji
+        return "redirect:/"; // Wracamy na stronę główną
     }
 }

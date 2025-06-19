@@ -1,7 +1,5 @@
 package com.MyGymApp.MyGymApp;
 
-
-
 import users.User;
 import users.UserRepository;
 import org.slf4j.Logger;
@@ -14,13 +12,10 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
-
-
 import java.time.LocalDate;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.MyGymApp.MyGymApp", "users"})
+@ComponentScan(basePackages = {"com.MyGymApp.MyGymApp", "users", "controller"})
 @EnableJpaRepositories(basePackages = {"users", "trophies", "training_plans", "exercise"})
 @EntityScan(basePackages = {"users", "trophies", "training_plans", "exercise"})
 public class MyGymAppApplication {
@@ -29,9 +24,8 @@ public class MyGymAppApplication {
 
 	private final UserRepository userRepository;
 
-
 	@Autowired
-    public MyGymAppApplication(UserRepository userRepository) {
+	public MyGymAppApplication(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 
@@ -39,15 +33,12 @@ public class MyGymAppApplication {
 		SpringApplication.run(MyGymAppApplication.class, args);
 	}
 
-    public static MyGymAppApplication createMyGymAppApplication(UserRepository userRepository) {
-        return new MyGymAppApplication(userRepository);
-    }
-
-    @Bean
+	@Bean
 	public CommandLineRunner initDemoDb() {
 		return (args) -> {
 			User admin = new User("admin", "admin", LocalDate.now());
 			admin.setAdmin(true);
+
 			User user1 = new User("Antek", "password", LocalDate.of(2023, 11, 10));
 			User user2 = new User("randomUser", "password", LocalDate.of(2023, 5, 5));
 
@@ -55,14 +46,10 @@ public class MyGymAppApplication {
 			userRepository.save(user1);
 			userRepository.save(user2);
 
-			log.info("findAll(), expect 3 users");
-			log.info("-------------------------------");
+			log.info("Zapisani użytkownicy:");
 			for (User user : userRepository.findAll()) {
 				log.info(user.toString());
 			}
-			log.info("\n");
 		};
-
-
-		}
+	}
 }

@@ -3,7 +3,6 @@ package users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -19,10 +18,13 @@ public class UserService {
     }
 
     public User registerUser(String username, String password) {
-        if (userRepository.existsById(Long.valueOf(username))) {
+        if (userRepository.existsByUsername(username)) { // Poprawione - sprawdzanie po username
             throw new IllegalArgumentException("Użytkownik już istnieje");
         }
-        User newUser = new User(username, password, LocalDate.now());
+        User newUser = new User();
+        newUser.setUsername(username);
+        newUser.setPassword(password);
+        newUser.setSignupDate(LocalDate.now());
         newUser.setAdmin(false);
         return userRepository.save(newUser);
     }
@@ -36,14 +38,12 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-
-
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    public void saveUser(User user) {
+        userRepository.save(user);
     }
 
     public List<User> getAllUsers() {
